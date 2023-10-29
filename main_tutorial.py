@@ -32,4 +32,12 @@ env = gym.make(environment_name)
 env = DummyVecEnv([lambda: env])
 model = PPO('MlpPolicy', env, verbose=1, tensorboard_log=log_path)
 
-model.learn(total_timesteps=20000)
+model.learn(total_timesteps=40000)
+
+# save model
+PPO_Path = os.path.join('Training', 'Saved Models', 'PPO_Model_Cartpole')
+model.save(PPO_Path)
+del model
+model = PPO.load(PPO_Path, env=env)
+
+
